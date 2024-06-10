@@ -14,13 +14,19 @@ RUN git clone https://github.com/jbeder/yaml-cpp.git && \
 
 RUN apt update && apt install -y libpcl-dev libopencv-dev gcc-10 g++-10 libtbb-dev liblz4-dev
 
+RUN apt update && apt install -y sudo aptitude
+
 # since we will output pcd file, don't want to root to lock it. normally 1000 is the first user in our desktop also
-RUN useradd -ms /bin/bash -u 1000 kin
+RUN useradd -ms /bin/bash -u 1000 kin \
+    && echo "kin ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/kin \
+    && chmod 0440 /etc/sudoers.d/kin
+    
 USER kin
 # setup oh-my-zsh 
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 RUN printf "y\ny\ny\n\n" | bash -c "$(curl -fsSL https://raw.githubusercontent.com/Kin-Zhang/Kin-Zhang/main/scripts/setup_ohmyzsh.sh)"
 
-RUN mkdir -p /home/kin/workspace && mkdir -p /home/kin/data
-RUN git clone --recurse-submodules https://github.com/KTH-RPL/DynamicMap_Benchmark /home/kin/workspace/DynamicMap_Benchmark
+#RUN mkdir -p /home/kin/workspace && mkdir -p /home/kin/data
+#RUN git clone --recurse-submodules https://github.com/KTH-RPL/DynamicMap_Benchmark /home/kin/workspace/DynamicMap_Benchmark
+RUN mkdir -p /home/kin/workspace/DynamicMap_Benchmark
 WORKDIR /home/kin/workspace/DynamicMap_Benchmark

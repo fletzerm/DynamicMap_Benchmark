@@ -19,11 +19,13 @@ If you want to use docker, please check [Dockerfile](../Dockerfile) for more det
 ```
 cd DynamicMap_Benchmark
 docker build -t zhangkin/dynamic_map .
-docker run -it --rm --name dynamicmap -v /home/kin/data:/home/kin/data zhangkin/dynamic_map /bin/zsh
+docker run -it --rm --name dynamicmap -v /home/mf_kftec/ait/data:/home/kin/data -v /home/mf_kftec/ait/DynamicMap_Benchmark:/home/kin/workspace/DynamicMap_Benchmark zhangkin/dynamic_map /bin/zsh
 ```
 - `-v` means link your data folder to docker container, so you can use your data in docker container. `-v ${your_env_path}:${container_path}`
 - If it's hard to build, you can always use `docker pull zhangkin/dynamic_map` to pull the image from docker hub.
 
+### CMAKE
+[Solution from Stackoverflow](https://stackoverflow.com/questions/49859457/how-to-reinstall-the-latest-cmake-version)
 
 ### PCL / OpenCV
 Normally, you will directly have PCL and OpenCV library if you installed ROS-full in your computer. 
